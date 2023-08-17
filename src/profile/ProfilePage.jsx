@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { sendTrackingLogEvent } from '@edx/frontend-platform/analytics';
 import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { AppContext } from '@edx/frontend-platform/react';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { getLocale, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { StatusAlert, Hyperlink } from '@edx/paragon';
 
 // Actions
@@ -193,6 +193,8 @@ class ProfilePage extends React.Component {
       isLoadingProfile,
     } = this.props;
 
+    const locale = getLocale();
+
     if (isLoadingProfile) {
       return <PageLoading srMessage={this.props.intl.formatMessage(messages['profile.loading'])} />;
     }
@@ -239,30 +241,35 @@ class ProfilePage extends React.Component {
               {this.renderViewMyRecordsButton()}
             </div>
             <Name
+              locale={locale}
               name={name}
               visibilityName={visibilityName}
               formId="name"
               {...commonFormProps}
             />
             <Country
+              locale={locale}
               country={country}
               visibilityCountry={visibilityCountry}
               formId="country"
               {...commonFormProps}
             />
             <PreferredLanguage
+              locale={locale}
               languageProficiencies={languageProficiencies}
               visibilityLanguageProficiencies={visibilityLanguageProficiencies}
               formId="languageProficiencies"
               {...commonFormProps}
             />
             <Education
+              locale={locale}
               levelOfEducation={levelOfEducation}
               visibilityLevelOfEducation={visibilityLevelOfEducation}
               formId="levelOfEducation"
               {...commonFormProps}
             />
             <SocialLinks
+              locale={locale}
               socialLinks={socialLinks}
               draftSocialLinksByPlatform={draftSocialLinksByPlatform}
               visibilitySocialLinks={visibilitySocialLinks}
@@ -273,12 +280,14 @@ class ProfilePage extends React.Component {
           <div className="pt-md-3 col-md-8 col-lg-7 offset-lg-1">
             {!this.isYOBDisabled() && this.renderAgeMessage()}
             <Bio
+              locale={locale}
               bio={bio}
               visibilityBio={visibilityBio}
               formId="bio"
               {...commonFormProps}
             />
             <Certificates
+              locale={locale}
               visibilityCourseCertificates={visibilityCourseCertificates}
               formId="certificates"
               {...commonFormProps}

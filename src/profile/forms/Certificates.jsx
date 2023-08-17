@@ -216,6 +216,7 @@ Certificates.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+  locale: PropTypes.string,
 };
 
 Certificates.defaultProps = {

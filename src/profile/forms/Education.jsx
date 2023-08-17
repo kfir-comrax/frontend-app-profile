@@ -171,6 +171,7 @@ Education.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+  locale: PropTypes.string,
 };
 
 Education.defaultProps = {

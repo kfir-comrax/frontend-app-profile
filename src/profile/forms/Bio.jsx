@@ -140,6 +140,7 @@ Bio.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+  locale: PropTypes.string,
 };
 
 Bio.defaultProps = {
