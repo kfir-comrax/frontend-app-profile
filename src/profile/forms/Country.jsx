@@ -167,6 +167,7 @@ Country.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+  locale: PropTypes.string,
 };
 
 Country.defaultProps = {
