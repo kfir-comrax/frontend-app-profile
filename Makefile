@@ -1,7 +1,13 @@
+export TRANSIFEX_RESOURCE = frontend-app-profile
+transifex_resource = frontend-app-profile
+transifex_langs = "ar,fr,es_419,zh_CN"
+
 intl_imports = ./node_modules/.bin/intl-imports.js
 transifex_utils = ./node_modules/.bin/transifex-utils.js
 i18n = ./src/i18n
 transifex_input = $(i18n)/transifex_input.json
+tx_url1 = https://www.transifex.com/api/2/project/edx-platform/resource/$(transifex_resource)/translation/en/strings/
+tx_url2 = https://www.transifex.com/api/2/project/edx-platform/resource/$(transifex_resource)/source/
 # This directory must match .babelrc .
 transifex_temp = ./temp/babel-plugin-formatjs
 
@@ -35,7 +41,19 @@ detect_changed_source_translations:
 	# Checking for changed translations...
 	git diff --exit-code $(i18n)
 
+# Pushes translations to Transifex.  You must run make extract_translations first.
+push_translations:
+	# Pushing strings to Transifex...
+	tx push -s
+	# Fetching hashes from Transifex...
+	./node_modules/@edx/reactifex/bash_scripts/get_hashed_strings_v3.sh
+	# Writing out comments to file...
+	$(transifex_utils) $(transifex_temp) --comments --v3-scripts-path
+	# Pushing comments to Transifex...
+	./node_modules/@edx/reactifex/bash_scripts/put_comments_v3.sh
+
 pull_translations:
+	tx pull -f --mode reviewed --languages=$(transifex_langs)
 	rm -rf src/i18n/messages
 	mkdir src/i18n/messages
 	cd src/i18n/messages \
